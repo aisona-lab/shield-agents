@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  shield-agents:
+    build: .
+    container_name: shield-agents
+    volumes:
+      - ./target-code:/scan-target
+      - ./shield-reports:/app/shield-reports
+    environment:
+      - SHIELD_LLM_PROVIDER=mock
+      # - SHIELD_LLM_API_KEY=your-api-key
+    command: scan /scan-target --provider mock
+
+  # Optional: Ollama for local LLM
+  ollama:
+    image: ollama/ollama:latest
+    container_name: shield-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+
+volumes:
+  ollama_data:

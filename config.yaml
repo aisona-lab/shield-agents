@@ -1,0 +1,49 @@
+# Shield Agents Configuration
+# Copy this file and customize for your project
+
+llm:
+  provider: mock  # mock, openai, anthropic, ollama
+  # api_key: YOUR_API_KEY  # Or set SHIELD_LLM_API_KEY env var
+  model: gpt-4
+  temperature: 0.1
+  max_tokens: 4096
+  fallback_enabled: true
+
+scanner:
+  sast_enabled: true
+  secrets_enabled: true
+  max_file_size: 1048576  # 1MB
+
+cache:
+  enabled: true
+  cache_dir: .shield-cache
+  incremental: true
+  max_cache_age_days: 30
+
+deduplication:
+  enabled: true
+  similarity_threshold: 0.85
+  merge_sources: true
+
+sarif:
+  enabled: true
+
+shieldignore:
+  enabled: true
+  filename: .shieldignore
+
+agents:
+  vuln_agent: true
+  threat_agent: true
+  recon_agent: true
+  compliance_agent: true
+  response_agent: true
+  autofix_agent: true
+
+report:
+  output_dir: ./shield-reports
+  formats:
+    - html
+    - sarif
+    - json
+  include_remediation: true

@@ -1,0 +1,67 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "shield-agents"
+version = "2.0.0"
+description = "AI-Powered Multi-Agent Cybersecurity Scanner"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.8"
+authors = [
+    {name = "Shield Agents Contributors", email = "shield-agents@proton.me"},
+]
+keywords = ["security", "scanner", "vulnerability", "sast", "ai", "agent", "cybersecurity", "owasp"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Security",
+    "Topic :: Software Development :: Quality Assurance",
+    "Topic :: Software Development :: Testing",
+]
+dependencies = [
+    "pyyaml>=6.0",
+    "rich>=13.0",
+]
+
+[project.optional-dependencies]
+openai = ["openai>=1.0"]
+anthropic = ["anthropic>=0.18"]
+ollama = ["httpx>=0.24"]
+all = ["openai>=1.0", "anthropic>=0.18", "httpx>=0.24"]
+dev = ["pytest>=7.0", "pytest-asyncio>=0.21", "black", "ruff"]
+
+[project.scripts]
+shield-agents = "shield_agents.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/shield-agents/shield-agents"
+Documentation = "https://github.com/shield-agents/shield-agents#readme"
+Repository = "https://github.com/shield-agents/shield-agents"
+"Bug Tracker" = "https://github.com/shield-agents/shield-agents/issues"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+
+[tool.ruff]
+target-version = "py38"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+ignore = ["E501"]
+
+[tool.black]
+line-length = 100
+target-version = ["py38"]

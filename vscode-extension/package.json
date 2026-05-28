@@ -1,0 +1,100 @@
+{
+  "name": "shield-agents",
+  "displayName": "Shield Agents - AI Security Scanner",
+  "description": "Real-time security scanning powered by Shield Agents AI. Detects vulnerabilities, secrets, and compliance issues as you code.",
+  "version": "2.0.0",
+  "publisher": "shield-agents",
+  "license": "MIT",
+  "icon": "images/icon.png",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Linters",
+    "Security"
+  ],
+  "keywords": [
+    "security",
+    "vulnerability",
+    "scanner",
+    "SAST",
+    "AI",
+    "shield-agents"
+  ],
+  "activationEvents": [
+    "onLanguage:python",
+    "onLanguage:javascript",
+    "onLanguage:typescript",
+    "onCommand:shield-agents.scanFile",
+    "onCommand:shield-agents.scanWorkspace"
+  ],
+  "main": "./src/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "shield-agents.scanFile",
+        "title": "Shield Agents: Scan Current File"
+      },
+      {
+        "command": "shield-agents.scanWorkspace",
+        "title": "Shield Agents: Scan Workspace"
+      },
+      {
+        "command": "shield-agents.showReport",
+        "title": "Shield Agents: Show Last Report"
+      },
+      {
+        "command": "shield-agents.clearCache",
+        "title": "Shield Agents: Clear Cache"
+      }
+    ],
+    "configuration": {
+      "title": "Shield Agents",
+      "properties": {
+        "shieldAgents.scanOnSave": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically scan files on save"
+        },
+        "shieldAgents.provider": {
+          "type": "string",
+          "default": "mock",
+          "enum": ["mock", "openai", "anthropic", "ollama"],
+          "description": "LLM provider to use"
+        },
+        "shieldAgents.apiKey": {
+          "type": "string",
+          "default": "",
+          "description": "API key for the LLM provider"
+        },
+        "shieldAgents.enableSAST": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable SAST scanning"
+        },
+        "shieldAgents.enableSecrets": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable secrets detection"
+        },
+        "shieldAgents.minSeverity": {
+          "type": "string",
+          "default": "LOW",
+          "enum": ["CRITICAL", "HIGH", "MEDIUM", "LOW", "INFO"],
+          "description": "Minimum severity to display"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "lint": "eslint src/",
+    "pretest": "npm run lint",
+    "test": "node ./test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.75.0",
+    "@types/node": "^18.0.0",
+    "eslint": "^8.0.0"
+  }
+}
