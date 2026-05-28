@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🛡️ Shield Agents
+# Shield Agents
 
 ### AI-Powered Multi-Agent Cybersecurity Scanner
 
@@ -13,28 +13,28 @@
 **Production-grade security analysis using coordinated AI agents.**  
 Detect vulnerabilities, threats, secrets, and compliance issues — then auto-fix them.
 
-[Getting Started](#-getting-started) · [Features](#-features) · [Architecture](#-architecture) · [CI/CD](#-cicd-integration) · [VS Code](#-vs-code-extension) · [Contributing](CONTRIBUTING.md)
+[Getting Started](#getting-started) · [Features](#features) · [Architecture](#architecture) · [CI/CD](#cicd-integration) · [VS Code](#vs-code-extension) · [Contributing](CONTRIBUTING.md)
 
 </div>
 
 ---
 
-## ✨ Why Shield Agents?
+## Why Shield Agents?
 
 Most security scanners just find problems. Shield Agents **finds AND fixes them** using a team of specialized AI agents that work together like a real security team:
 
-- 🔍 **VulnAgent** — Finds SQL injection, XSS, command injection, and more
-- 🎯 **ThreatAgent** — Maps attack vectors to MITRE ATT&CK techniques
-- 🕵️ **ReconAgent** — Detects information disclosure and exposed secrets
-- 📋 **ComplianceAgent** — Checks against OWASP Top 10 2021
-- 🚨 **ResponseAgent** — Provides risk assessment and incident response plans
-- 🔧 **AutoFixAgent** — The "Master White Hat Hacker" that generates copy-paste-ready code fixes
+- **VulnAgent** — Finds SQL injection, XSS, command injection, and more
+- **ThreatAgent** — Maps attack vectors to MITRE ATT&CK techniques
+- **ReconAgent** — Detects information disclosure and exposed secrets
+- **ComplianceAgent** — Checks against OWASP Top 10 2021
+- **ResponseAgent** — Provides risk assessment and incident response plans
+- **AutoFixAgent** — Generates copy-paste-ready code fixes
 
 Works out of the box with the **smart mock provider** — no API key needed to start scanning.
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Installation
 
@@ -80,7 +80,7 @@ docker-compose up ollama shield-agents
 
 ---
 
-## 🛡️ Features
+## Features
 
 ### Core Scanning Engine
 
@@ -93,24 +93,24 @@ docker-compose up ollama shield-agents
 
 ### Production Features (v2.0)
 
-| # | Feature | Description |
-|---|---------|-------------|
-| 1 | **Smart Mock Provider** | Pattern-matched findings based on actual code content — demo mode feels real, not static |
-| 2 | **Deduplication Engine** | 3-phase dedup (exact → fuzzy → category merge) — when VulnAgent and SAST both find "SQL Injection", they merge into one finding with multiple sources |
-| 3 | **SARIF 2.1.0 Output** | GitHub Security tab integration — upload results directly to GitHub code scanning |
-| 4 | **`.shieldignore` File** | Like `.gitignore` for false positives — 9 rule types (file, category, severity, rule, path, line, title, cwe, id) |
-| 5 | **Caching / Incremental Scans** | Cache previous results, only re-scan changed files — production-ready performance |
-| 6 | **LLM Fallback Parser** | 5-strategy parser for when LLMs return invalid JSON (~30% failure rate) — never crash on bad responses |
-| 7 | **VS Code Extension** | On-save scanning with inline diagnostics — security issues appear directly in your editor |
-| 8 | **Benchmark Suite** | 13 OWASP WebGoat-style test cases — proves the scanner actually finds real bugs |
-| 9 | **CI/CD Mode** | `--ci` flag for pipelines — JSON to stdout, SARIF output, exit code based on risk threshold |
-| 10 | **`--format json`** | Pipe results to other tools — structured JSON output for integration |
-| 11 | **Auto-Exclude** | Tests, benchmarks, and examples automatically excluded from scan — eliminates ~70% false positives |
-| 12 | **Agent-Differentiated Mock** | Each AI agent returns specialized findings in mock mode — VulnAgent finds vulns, ThreatAgent finds threats |
+| Feature | Description |
+|---------|-------------|
+| **Smart Mock Provider** | Pattern-matched findings based on actual code content — demo mode feels real, not static |
+| **Deduplication Engine** | 3-phase dedup (exact → fuzzy → category merge) — when VulnAgent and SAST both find "SQL Injection", they merge into one finding with multiple sources |
+| **SARIF 2.1.0 Output** | GitHub Security tab integration — upload results directly to GitHub code scanning |
+| **`.shieldignore` File** | Like `.gitignore` for false positives — 9 rule types (file, category, severity, rule, path, line, title, cwe, id) |
+| **Caching / Incremental Scans** | Cache previous results, only re-scan changed files — production-ready performance |
+| **LLM Fallback Parser** | 5-strategy parser for when LLMs return invalid JSON (~30% failure rate) — never crash on bad responses |
+| **VS Code Extension** | On-save scanning with inline diagnostics — security issues appear directly in your editor |
+| **Benchmark Suite** | 13 OWASP WebGoat-style test cases — proves the scanner actually finds real bugs |
+| **CI/CD Mode** | `--ci` flag for pipelines — JSON to stdout, SARIF output, exit code based on risk threshold |
+| **Format Options** | Pipe results to other tools — structured JSON output for integration |
+| **Auto-Exclude** | Tests, benchmarks, and examples automatically excluded from scan — eliminates ~70% false positives |
+| **Agent-Differentiated Mock** | Each AI agent returns specialized findings in mock mode — VulnAgent finds vulns, ThreatAgent finds threats |
 
 ---
 
-## 📋 CLI Reference
+## CLI Reference
 
 ```bash
 shield-agents scan <target> [options]
@@ -142,7 +142,7 @@ Commands:
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Environment Variables
 
@@ -203,7 +203,7 @@ id:VulnAgent-3                     # Ignore a specific finding by ID
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 shield-agents/
@@ -215,7 +215,7 @@ shield-agents/
 │   │   ├── recon.py           # Reconnaissance & info disclosure
 │   │   ├── compliance.py      # OWASP compliance checking
 │   │   ├── response.py        # Incident response & risk assessment
-│   │   └── autofix.py         # Auto-remediation (Master White Hat Hacker)
+│   │   └── autofix.py         # Auto-remediation
 │   ├── scanners/              # Static analysis
 │   │   ├── sast.py            # 10 SAST detection rules
 │   │   └── secrets.py         # 24 secret type patterns
@@ -264,7 +264,7 @@ shield-agents/
 
 ---
 
-## 🔄 CI/CD Integration
+## CI/CD Integration
 
 ### GitHub Actions
 
@@ -319,7 +319,7 @@ shield-agents scan ./src --ci --fail-threshold 60
 
 ---
 
-## 💻 VS Code Extension
+## VS Code Extension
 
 Real-time security scanning directly in your editor:
 
@@ -333,7 +333,7 @@ Install the extension from the `vscode-extension/` directory and configure via V
 
 ---
 
-## 🤖 AI Assistant Compatibility
+## AI Assistant Compatibility
 
 Shield Agents works seamlessly with AI coding assistants:
 
@@ -347,7 +347,7 @@ Shield Agents works seamlessly with AI coding assistants:
 
 ---
 
-## 📊 Benchmark Suite
+## Benchmark Suite
 
 Verify detection accuracy with 13 OWASP WebGoat-style test cases:
 
@@ -371,7 +371,7 @@ python -m benchmarks.benchmark --verbose
 
 ---
 
-## 🧪 Running Tests
+## Running Tests
 
 ```bash
 # Run all 52 unit tests
@@ -391,7 +391,7 @@ ruff check shield_agents/
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 We love contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 
@@ -406,7 +406,7 @@ pytest tests/ -v
 
 ---
 
-## 📄 License
+## License
 
 MIT License — see [LICENSE](LICENSE) for details.
 
@@ -414,26 +414,26 @@ MIT License — see [LICENSE](LICENSE) for details.
 
 <div align="center">
 
-### 🌐 En Español
+### En Español
 
 **Shield Agents — Escáner de Ciberseguridad Multi-Agente con IA**
 
-Shield Agents es una plataforma de análisis de seguridad de grado producción que utiliza agentes de IA coordinados para detectar vulnerabilidades, amenazas, secretos y problemas de cumplimiento en tu código fuente. No solo encuentra los problemas — los **arregla automáticamente**.
+Shield Agents es una plataforma de análisis de seguridad de grado producción que utiliza agentes de IA coordinados para detectar vulnerabilidades, amenazas, secretos y problemas de cumplimiento.
 
 **Características principales:**
 
 | Característica | Descripción |
 |---------------|-------------|
-| 🛡️ Escáner SAST | 10 reglas de detección: Inyección SQL, XSS, Inyección de Comandos, Path Traversal, Deserialización Insegura, Criptografía Débil, Problemas de Autenticación, Credenciales Hardcodeadas, SSL/TLS, SSRF |
-| 🔑 Escáner de Secretos | 24 tipos de patrones: AWS, GitHub, Google, Slack, Stripe, conexiones DB, JWTs, Claves Privadas, con filtrado de entropía Shannon |
-| 🤖 6 Agentes de IA | VulnAgent (vulnerabilidades), ThreatAgent (modelado de amenazas), ReconAgent (reconocimiento), ComplianceAgent (cumplimiento OWASP), ResponseAgent (respuesta a incidentes), AutoFixAgent (corrección automática — el "Hacker Ético Maestro") |
-| 🔄 Motor de Deduplicación | 3 fases: coincidencia exacta → coincidencia difusa → fusión por categoría |
-| 📋 Formato SARIF | Integración con la pestaña de Seguridad de GitHub |
-| 🚫 Archivo `.shieldignore` | Como `.gitignore` pero para falsos positivos — 9 tipos de reglas |
-| ⚡ Escaneo Incremental | Caché de resultados anteriores, solo re-escanea archivos modificados |
-| 🔧 Auto-Fix | Correcciones instantáneas basadas en patrones + correcciones profundas con LLM |
-| 💻 Extensión VS Code | Escaneo al guardar con diagnósticos inline |
-| 🚀 Modo CI/CD | `--ci` para pipelines — JSON a stdout, SARIF, código de salida basado en riesgo |
+| Escáner SAST | 10 reglas de detección: Inyección SQL, XSS, Inyección de Comandos, Path Traversal, Deserialización Insegura, Criptografía Débil, Problemas de Autenticación, Credenciales hardcodeadas, Problemas SSL/TLS, SSRF |
+| Escáner de Secretos | 24 tipos de patrones: AWS, GitHub, Google, Slack, Stripe, conexiones DB, JWTs, Claves Privadas, con filtrado de entropía Shannon |
+| 6 Agentes de IA | VulnAgent (vulnerabilidades), ThreatAgent (modelado de amenazas), ReconAgent (reconocimiento), ComplianceAgent (cumplimiento OWASP), ResponseAgent (respuesta a incidentes), AutoFixAgent (correcciones automáticas) |
+| Motor de Deduplicación | 3 fases: coincidencia exacta → coincidencia difusa → fusión por categoría |
+| Formato SARIF | Integración con la pestaña de Seguridad de GitHub |
+| Archivo `.shieldignore` | Como `.gitignore` pero para falsos positivos — 9 tipos de reglas |
+| Escaneo Incremental | Caché de resultados anteriores, solo re-escanea archivos modificados |
+| Auto-Fix | Correcciones instantáneas basadas en patrones + correcciones profundas con LLM |
+| Extensión VS Code | Escaneo al guardar con diagnósticos inline |
+| Modo CI/CD | `--ci` para pipelines — JSON a stdout, SARIF, código de salida basado en riesgo |
 
 **Inicio rápido:**
 
@@ -466,8 +466,8 @@ Las contribuciones son bienvenidas. Lee [CONTRIBUTING.md](CONTRIBUTING.md) para 
 
 ---
 
-If you find Shield Agents useful, please ⭐ star the repo — it helps others discover the project!
+If you find Shield Agents useful, please star the repo — it helps others discover the project!
 
-**Built with care for the security community**
+Built with care for the security community
 
 </div>
