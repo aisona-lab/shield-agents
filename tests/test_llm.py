@@ -116,6 +116,24 @@ class TestMockProvider(unittest.TestCase):
         # Clean code should have fewer findings than vulnerable code
         self.assertLessEqual(len(result.get("findings", [])), 2)
 
+    def test_no_cross_line_false_positive(self):
+        # A SELECT string on one line and an unrelated concatenation on the
+        # next must not combine into a single SQL-injection match.
+        config = LLMConfig(provider="mock")
+        provider = MockProvider(config)
+
+        code = '''label = "SELECT a FROM b WHERE c"
+greeting = first + last'''
+        result = asyncio.run(provider.complete_json([
+            {"role": "system", "content": "Analyze"},
+            {"role": "user", "content": code},
+        ]))
+        titles = [f["title"].lower() for f in result.get("findings", [])]
+        self.assertFalse(
+            any("sql injection" in t for t in titles),
+            f"Cross-line SQL false positive in mock provider: {titles}",
+        )
+
     def test_provider_factory(self):
         config = LLMConfig(provider="mock")
         provider = create_llm_provider(config)

@@ -17,7 +17,7 @@ SECRET_PATTERNS = [
     # AWS
     {
         "name": "AWS Access Key ID",
-        "pattern": r'AWS_KEY_PATTERN_PLACEHOLDER',
+        "pattern": r'\b(?:AKIA|ASIA|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ABIA|ACCA)[0-9A-Z]{16}\b',
         "severity": "CRITICAL",
         "category": "cloud-credentials",
     },
@@ -30,7 +30,7 @@ SECRET_PATTERNS = [
     # GitHub
     {
         "name": "GitHub Personal Access Token",
-        "pattern": r'GITHUB_TOKEN_PATTERN_PLACEHOLDER',
+        "pattern": r'ghp_[0-9a-zA-Z]{36}',
         "severity": "CRITICAL",
         "category": "vcs-credentials",
     },
@@ -75,7 +75,7 @@ SECRET_PATTERNS = [
     # Stripe
     {
         "name": "Stripe Secret Key",
-        "pattern": r'STRIPE_KEY_PATTERN_PLACEHOLDER',
+        "pattern": r'sk_live_[0-9a-zA-Z]{24,}',
         "severity": "CRITICAL",
         "category": "payment-credentials",
     },

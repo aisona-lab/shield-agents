@@ -26,10 +26,13 @@ class SASTRule:
     patterns: List[str]
     remediation: str
     languages: List[str] = None
+    false_positive_patterns: List[str] = None
 
     def __post_init__(self):
         if self.languages is None:
             self.languages = ["*"]
+        if self.false_positive_patterns is None:
+            self.false_positive_patterns = []
 
 
 # The 10 SAST detection rules
@@ -134,7 +137,7 @@ SAST_RULES: List[SASTRule] = [
         cwe="CWE-327",
         patterns=[
             r'hashlib\.(md5|sha1)\s*\(',
-            r'DES|RC4|Blowfish',
+            r'\b(?:DES|RC4|RC2|Blowfish)\b\s*(?:\.new|\()',
             r'MODE_ECB',
             r'random\.(random|randint|choice|shuffle)\s*\((?!.*#.*security)',
             r'cryptography\.hazmat.*MD5',
@@ -153,7 +156,6 @@ SAST_RULES: List[SASTRule] = [
             r'verify_password\s*=\s*False',
             r'check_password\s*=\s*True',
             r'assert\s+.*authenticated',
-            r'@login_required',
             r'session\[.*\]\s*=\s*True(?!.*verify)',
             r'jwt\.decode\s*\([^)]*\)(?!.*algorithms)',
         ],
@@ -176,6 +178,12 @@ SAST_RULES: List[SASTRule] = [
         ],
         remediation="Move credentials to environment variables or a secure vault. Use os.environ.get() or a secrets manager.",
         languages=["python", "javascript"],
+        false_positive_patterns=[
+            r'example|placeholder|sample|dummy|changeme|redacted|fake',
+            r'your[_\-]?(api[_\-]?)?(key|secret|token|password)',
+            r'replace[_\-]?me|xxx+|\.\.\.|<[^>]+>',
+            r'os\.environ|getenv|process\.env|\$\{|\bENV\b',
+        ],
     ),
     SASTRule(
         id="SAST-009",
@@ -251,12 +259,23 @@ class SASTScanner:
         for rule in self.rules:
             for pattern in rule.patterns:
                 try:
-                    for match in re.finditer(pattern, content, re.IGNORECASE | re.DOTALL):
+                    # NOTE: no re.DOTALL — patterns must match within a single
+                    # line. Allowing '.' to cross newlines caused greedy '.*' to
+                    # span unrelated lines (false positives) and negative
+                    # lookaheads to scan the whole file (false negatives).
+                    for match in re.finditer(pattern, content, re.IGNORECASE):
                         line_num = content[:match.start()].count("\n") + 1
                         line_content = lines[line_num - 1].strip() if line_num <= len(lines) else match.group(0)
 
                         # Skip very short matches that are likely false positives
                         if len(match.group(0)) < 3:
+                            continue
+
+                        # Skip lines matching this rule's known false-positive patterns
+                        if rule.false_positive_patterns and any(
+                            re.search(fp, line_content, re.IGNORECASE)
+                            for fp in rule.false_positive_patterns
+                        ):
                             continue
 
                         finding = {

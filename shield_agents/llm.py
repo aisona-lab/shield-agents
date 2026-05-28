@@ -695,7 +695,7 @@ class MockProvider(BaseLLMProvider):
             agent_info = self.AGENT_PATTERNS[calling_agent]
             for pattern_str, info in agent_info["extra_patterns"]:
                 try:
-                    for match in re.finditer(pattern_str, code_content, re.IGNORECASE | re.DOTALL):
+                    for match in re.finditer(pattern_str, code_content, re.IGNORECASE):
                         line_num = code_content[:match.start()].count("\n") + 1
                         lines = code_content.split("\n")
                         line_content = lines[line_num - 1].strip() if line_num <= len(lines) else ""
@@ -737,7 +737,7 @@ class MockProvider(BaseLLMProvider):
             info = pattern_info[1]
 
             try:
-                for match in re.finditer(pattern, code, re.IGNORECASE | re.DOTALL):
+                for match in re.finditer(pattern, code, re.IGNORECASE):
                     # Find line number
                     line_num = code[:match.start()].count("\n") + 1
                     line_content = lines[line_num - 1].strip() if line_num <= len(lines) else ""
